@@ -24,13 +24,19 @@ export const getAuthUser = async () => {
   }
 };
 
-export const completeOnboarding = async (userData) => {
+export const completeOnboarding = async (userData) => {  
+  console.log(userData)
   const response = await axiosInstance.post("/auth/onboarding", userData);
   return response.data;
 };
 
 export async function getUserFriends() {
   const response = await axiosInstance.get("/users/friends");
+  return response.data;
+}
+
+export const getLeaderboard = async () => {
+  const response = await axiosInstance.get("/leaderboard");
   return response.data;
 }
 
@@ -63,3 +69,4 @@ export async function getStreamToken() {
   const response = await axiosInstance.get("/chat/token");
   return response.data;
 }
+

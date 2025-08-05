@@ -146,3 +146,16 @@ export async function getOutgoingFriendReqs(req, res) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+export const getLeaderboard = async (req, res) => {
+  try {
+    const users = await User.find()
+      .sort({ createdAt: 1 }) // 1 = Oldest first, -1 = Newest first
+      .select("fullName profilePic nativeLanguage learningLanguage createdAt");
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users leaderboard", error });
+  }
+}
+
