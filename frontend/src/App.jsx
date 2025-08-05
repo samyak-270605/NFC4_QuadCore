@@ -7,18 +7,10 @@ import NotificationsPage from "./pages/NotificationsPage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import Calendar from "./components/Calendar.jsx";
 import TimedTask from './components/TimedTask.jsx';
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ccf819027b99b0784457e4f288d97997c239aecd
 import FriendsPage from './pages/FriendsPage.jsx';
 import GoogleCalendar from "./components/GoogleCalendar";
-
->>>>>>> 27db934da65900a8010fc3da626b956be3063e7f
 import { Toaster } from 'react-hot-toast';
 import PageLoader from './components/PageLoader.jsx';
 import useAuthUser from './hooks/useAuthUser.js';
