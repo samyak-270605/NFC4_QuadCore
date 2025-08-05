@@ -1,17 +1,8 @@
 
 import { Link, useLocation } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
-<<<<<<< HEAD
-
 import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon , CalendarIcon,TrophyIcon, ClockIcon} from "lucide-react";
 
-
-
-
-=======
-import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon , CalendarIcon} from "lucide-react";
-
->>>>>>> 27db934da65900a8010fc3da626b956be3063e7f
 const Sidebar = () => {
   const { authUser } = useAuthUser();
   const location = useLocation();
