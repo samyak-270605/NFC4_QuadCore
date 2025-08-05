@@ -36,7 +36,7 @@ export async function getUserFriends() {
 }
 
 export const getLeaderboard = async () => {
-  const response = await axiosInstance.get("/leaderboard");
+  const response = await axiosInstance.get("/users/leaderboard");
   return response.data;
 }
 
