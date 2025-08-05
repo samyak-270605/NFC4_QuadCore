@@ -1,12 +1,11 @@
 
 import { Link, useLocation } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
-<<<<<<< HEAD
-import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon , CalendarIcon} from "lucide-react";
 
-=======
-import { BellIcon, HomeIcon, ShipWheelIcon, TrophyIcon, UsersIcon } from "lucide-react";
->>>>>>> b45ab3c07a82f6314b26a3102849db7a8d240cf1
+import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon , CalendarIcon,TrophyIcon, ClockIcon} from "lucide-react";
+
+
+
 
 const Sidebar = () => {
   const { authUser } = useAuthUser();
@@ -74,6 +73,15 @@ const Sidebar = () => {
           <TrophyIcon className="size-5 text-base-content opacity-70" />
           <span>Leaderboard</span>
         </Link>
+
+         <Link
+          to="/timed-task"
+          className="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition"
+        >
+          <ClockIcon className="w-5 h-5 mr-2" />
+          <span>Timed Task</span>
+        </Link>
+
       </nav>
 
       {/* USER PROFILE SECTION */}
