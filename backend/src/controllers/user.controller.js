@@ -150,12 +150,13 @@ export async function getOutgoingFriendReqs(req, res) {
 export const getLeaderboard = async (req, res) => {
   try {
     const users = await User.find()
-      .sort({ createdAt: 1 }) // 1 = Oldest first, -1 = Newest first
+      .sort({ createdAt: 1 }) // ✅ ASCENDING (oldest first)
       .select("fullName profilePic nativeLanguage learningLanguage createdAt");
-
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching users leaderboard", error });
+    console.error("Error fetching leaderboard:", error);
+    res.status(500).json({ message: "Server error" });
   }
 }
+
 
