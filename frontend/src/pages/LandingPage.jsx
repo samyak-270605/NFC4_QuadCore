@@ -1,6 +1,6 @@
 import { ShipWheel, Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router";
-import lpage from "../../public/lpage.webp";
+import lpage from "/lpage.webp";
 
 const LandingPage = () => {
   return (
