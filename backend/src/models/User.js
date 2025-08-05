@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
   },
   joinedGroups: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "StudyGroup",
       default: [],
     },

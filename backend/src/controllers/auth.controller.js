@@ -105,7 +105,13 @@ export function logout(req, res){
 
 export const onboard = async (req, res) => {
   try {
-    const userId = req.user.userId;
+    console.log("Incoming request body:", req.body);
+    console.log("Authenticated user:", req.user); // Check if req.user is populated
+
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized: No user ID found" });
+    }
 
     const {
       bio,
@@ -119,6 +125,8 @@ export const onboard = async (req, res) => {
       studyPreferences,
       joinedGroups,
     } = req.body;
+
+    console.log("Updating user:", userId);
 
     const user = await User.findByIdAndUpdate(
       userId,
@@ -138,8 +146,13 @@ export const onboard = async (req, res) => {
       { new: true }
     );
 
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     res.status(200).json({ success: true, user });
   } catch (error) {
+    console.error("Onboarding Error:", error); // ✅ Full error log
     res.status(500).json({ error: error.message });
   }
 };

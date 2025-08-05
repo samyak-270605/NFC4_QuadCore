@@ -1,8 +1,12 @@
 
 import { Link, useLocation } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
+<<<<<<< HEAD
 import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon , CalendarIcon} from "lucide-react";
 
+=======
+import { BellIcon, HomeIcon, ShipWheelIcon, TrophyIcon, UsersIcon } from "lucide-react";
+>>>>>>> b45ab3c07a82f6314b26a3102849db7a8d240cf1
 
 const Sidebar = () => {
   const { authUser } = useAuthUser();
@@ -15,7 +19,7 @@ const Sidebar = () => {
         <Link to="/" className="flex items-center gap-2.5">
           <ShipWheelIcon className="size-9 text-primary" />
           <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary  tracking-wider">
-            Streamify
+            onlyStudy
           </span>
         </Link>
       </div>
@@ -59,6 +63,16 @@ const Sidebar = () => {
         >
           <BellIcon className="size-5 text-base-content opacity-70" />
           <span>Notifications</span>
+        </Link>
+
+        <Link
+          to="/leaderboard"
+          className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
+            currentPath === "/leaderboard" ? "btn-active" : ""
+          }`}
+        >
+          <TrophyIcon className="size-5 text-base-content opacity-70" />
+          <span>Leaderboard</span>
         </Link>
       </nav>
 
