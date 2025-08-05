@@ -24,7 +24,7 @@ const SignUpPage = () => {
     signupMutation(signupData);
   }
 
-  return (<div className='h-screen flex items-center justify-center p-4 sm:p-6 md:p-8' data-theme="forest">
+  return (<div className='h-screen flex items-center justify-center p-4 sm:p-6 md:p-8' data-theme="light">
     <div className='border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100
     rounded-xl shadow-lg overflow-hidden'>
 
@@ -35,7 +35,7 @@ const SignUpPage = () => {
         <ShipWheelIcon className ="size-9 text-primary" />
         <span className='text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r
         from-primary to-secondary tracking-wider'>
-          Streamify
+          onlyStudy
         </span>
       </div>
 
@@ -52,7 +52,7 @@ const SignUpPage = () => {
             <div>
               <h2 className='text-xl font-semibold'>Create an Account</h2>
               <p className="text-sm opacity-70">
-                Join Streamify and start your language learning adventure!
+                Join onlyStudy and find best peers to study with!
               </p>
             </div>
             <div className="space-y-3">
@@ -143,7 +143,7 @@ const SignUpPage = () => {
       <div className='max-w-md p-8 w-full'> 
         {/* Illustration */}
         <div className='relative aspect-square max-w-sm mx-auto'>
-          <img src="/i.png" alt="Language connection illustration" className='w-full h-full object-contain' />
+          <img src="/logo.jpg" alt="Language connection illustration" className='w-full h-full object-contain' />
         </div>
 
         <div className='text-center space-y-3 mt-6'>
