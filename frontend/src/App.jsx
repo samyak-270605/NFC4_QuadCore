@@ -7,7 +7,11 @@ import NotificationsPage from "./pages/NotificationsPage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
+<<<<<<< HEAD
 import FriendsPage from './pages/FriendsPage.jsx';
+=======
+import GoogleCalendar from "./components/GoogleCalendar";
+>>>>>>> 8f840f83c7bfc303149061531f3d3800949e736c
 
 import { Toaster } from 'react-hot-toast';
 import PageLoader from './components/PageLoader.jsx';
@@ -90,6 +94,8 @@ const App = () => {
         ) : (
           <Navigate to="/login" />
         )} />
+
+        <Route path="/calendar" element={<GoogleCalendar />} />
 
       </Routes>
 
