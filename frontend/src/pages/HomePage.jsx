@@ -9,7 +9,7 @@ import {
 } from "../lib/api";
 import { Link } from "react-router";
 import { CheckCircleIcon, MapPinIcon, UserPlusIcon, UsersIcon } from "lucide-react";
-
+import Matchmaker from "../components/Matchmaker"
 import { capitialize } from "../lib/utils";
 
 import FriendCard from "../components/FriendCard";
@@ -75,7 +75,8 @@ const HomePage = () => {
             ))}
           </div>
         )}
-
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Study Room Suggestions</h2>
+        <Matchmaker/>
         <section>
           <div className="mb-6 sm:mb-8">
   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
