@@ -1,6 +1,6 @@
-
 import { Link, useLocation } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
+
 import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon , CalendarIcon,TrophyIcon, ClockIcon} from "lucide-react";
 
 const Sidebar = () => {
@@ -71,12 +71,14 @@ const Sidebar = () => {
         </Link>
 
          <Link
-          to="/timed-task"
-          className="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition"
-        >
-          <ClockIcon className="w-5 h-5 mr-2" />
-          <span>Timed Task</span>
-        </Link>
+  to="/timed-task"
+  className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
+    currentPath === "/timed-task" ? "btn-active" : ""
+  }`}
+>
+  <ClockIcon className="size-5 text-base-content opacity-70" />
+  <span>Timed Task</span>
+</Link>
 
       </nav>
 

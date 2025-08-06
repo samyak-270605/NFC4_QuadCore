@@ -11,7 +11,7 @@ const Leaderboard = () => {
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="container mx-auto max-w-4xl space-y-8">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight mb-4">
           Leaderboard
         </h1>
 
@@ -20,31 +20,33 @@ const Leaderboard = () => {
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : users && users.length > 0 ? (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {users.map((user, index) => (
               <div
                 key={user._id}
                 className="card bg-base-200 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="card-body p-4 flex items-center justify-between">
+                <div className="card-body p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                   {/* LEFT: Rank + Avatar + Info */}
-                  <div className="flex items-center gap-4">
-                    <span className="text-xl font-semibold w-6 text-center">
+                  <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <span className="text-lg font-medium w-6 text-center">
                       {index + 1}
                     </span>
-                    <div className="avatar w-14 h-14 rounded-full bg-base-300">
+                    <div className="avatar w-12 h-12 rounded-full bg-base-300">
                       {user.profilePic ? (
                         <img
                           src={user.profilePic}
                           alt={user.fullName}
-                          className="rounded-full"
+                          className="rounded-full object-cover w-full h-full"
                         />
                       ) : (
-                        <UserIcon className="w-8 h-8 text-base-content opacity-50 m-auto" />
+                        <UserIcon className="w-6 h-6 text-base-content opacity-50 m-auto" />
                       )}
                     </div>
                     <div>
-                      <h3 className="font-semibold">{user.fullName}</h3>
+                      <h3 className="font-semibold text-base leading-tight">
+                        {user.fullName}
+                      </h3>
                       <div className="flex flex-wrap gap-2 mt-1 text-sm opacity-80">
                         <span>Native: {user.nativeLanguage || "N/A"}</span>
                         <span>| Learning: {user.learningLanguage || "N/A"}</span>

@@ -1,187 +1,123 @@
+import { useState } from "react";
 
-
-import React, { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode"; // ✅ Named import
-
-const TimedTask = () => {
-  const [userId, setUserId] = useState(null);
+const App = () => {
+  const [task, setTask] = useState({ title: "", details: "", time: "" });
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState({
-    title: "",
-    description: "",
-    durationMinutes: ""
-  });
-  const [timers, setTimers] = useState({});
 
-  // ✅ Extract userId from token inside useEffect
-  useEffect(() => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="))
-      ?.split("=")[1];
-
-    if (!token) return;
-
-    try {
-      const decoded = jwtDecode(token);
-      setUserId(decoded.id || decoded._id); // Depending on what your token contains
-    } catch (error) {
-      console.error("Invalid token:", error);
-    }
-  }, []);
-
-  // Fetch tasks after userId is set
-useEffect(() => {
-  if (!userId) return;
-
-  const fetchTasks = async () => {
-    try {
-      const res = await fetch(`http://localhost:5001/api/tasks/${userId}`);
-      const data = await res.json();
-      setTasks(data);
-    } catch (err) {
-      console.error("Error fetching tasks:", err);
-    }
+  const handleChange = (e) => {
+    setTask({ ...task, [e.target.name]: e.target.value });
   };
 
-  fetchTasks();
-}, [userId]);
-
-
-
-  // Create task
-  const createTask = async () => {
-  if (!newTask.title || !newTask.durationMinutes) {
-    alert("Title and duration required");
-    return;
-  }
-
-  if (!userId) {
-    console.error("User ID not loaded yet.");
-    return;
-  }
-
-  try {
-    const res = await fetch(`http://localhost:5001/api/tasks/${userId}`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  credentials: "include", // send cookies!
-  body: JSON.stringify({ ...newTask, userId }),
-});
-
-    const createdTask = await res.json();
-
-    // Update list directly instead of refetching
-    setTasks((prev) => [...prev, createdTask]);
-
-    setNewTask({ title: "", description: "", durationMinutes: "" });
-  } catch (err) {
-    console.error("Error creating task:", err);
-  }
-};
-
-
-  // Delete task
-  const deleteTask = async (id) => {
-    await fetch(`http://localhost:5001/api/tasks/${id}`, { method: "DELETE" });
-
-    // Refetch tasks
-    const taskRes = await fetch(`http://localhost:5001/api/tasks/${userId}`);
-    const data = await taskRes.json();
-    setTasks(data);
+  const addTask = () => {
+    if (!task.title || !task.details || !task.time) return;
+    setTasks([
+      ...tasks,
+      { ...task, timeLeft: task.time * 60, timerRunning: false, intervalId: null },
+    ]);
+    setTask({ title: "", details: "", time: "" });
   };
 
-  // Start timer
-  const startTimer = (id, duration) => {
-    if (timers[id]) return;
+  const startTimer = (index) => {
+    const updatedTasks = [...tasks];
+    const current = updatedTasks[index];
+    if (current.timerRunning || current.timeLeft <= 0) return;
 
-    const endTime = Date.now() + duration * 60000;
-    const interval = setInterval(() => {
-      const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
-      setTimers((prev) => ({ ...prev, [id]: remaining }));
-      if (remaining <= 0) clearInterval(interval);
+    current.timerRunning = true;
+    current.intervalId = setInterval(() => {
+      setTasks((prevTasks) => {
+        const newTasks = [...prevTasks];
+        if (newTasks[index].timeLeft <= 1) {
+          clearInterval(newTasks[index].intervalId);
+          newTasks[index].timerRunning = false;
+          alert(`Timer ended for: ${newTasks[index].title}`);
+        }
+        newTasks[index].timeLeft -= 1;
+        return [...newTasks];
+      });
     }, 1000);
 
-    setTimers((prev) => ({ ...prev, [id]: duration * 60 }));
+    setTasks(updatedTasks);
+  };
+
+  const deleteTask = (index) => {
+    const updatedTasks = [...tasks];
+    if (updatedTasks[index].intervalId) {
+      clearInterval(updatedTasks[index].intervalId);
+    }
+    updatedTasks.splice(index, 1);
+    setTasks(updatedTasks);
+  };
+
+  const formatTime = (seconds) => {
+    const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const sec = String(seconds % 60).padStart(2, "0");
+    return `${min}:${sec}`;
   };
 
   return (
-    <div className="p-6 bg-white rounded shadow w-full max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Timed Task List</h2>
+    <div className="min-h-screen bg-zinc-900 text-white px-4 py-6 font-sans">
+      <div className="max-w-4xl mx-auto space-y-6 px-2 md:px-0">
+        <h1 className="text-3xl font-bold text-center">🕒 Timed Task Tracker</h1>
 
-      <div className="space-y-2 mb-4">
-        <input
-          type="text"
-          placeholder="Task Title"
-          value={newTask.title}
-          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-          className="border p-2 w-full"
-        />
-        <textarea
-          placeholder="Description"
-          value={newTask.description}
-          onChange={(e) =>
-            setNewTask({ ...newTask, description: e.target.value })
-          }
-          className="border p-2 w-full"
-        />
-        <input
-          type="number"
-          placeholder="Duration (minutes)"
-          value={newTask.durationMinutes}
-          onChange={(e) =>
-            setNewTask({ ...newTask, durationMinutes: e.target.value })
-          }
-          className="border p-2 w-full"
-        />
-        <button
-          onClick={createTask}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Add Task
-        </button>
-      </div>
+        <div className="bg-zinc-800 p-4 rounded-lg shadow space-y-3">
+          <input
+            name="title"
+            value={task.title}
+            onChange={handleChange}
+            placeholder="Task Title"
+            className="w-full p-2 bg-zinc-700 text-white rounded placeholder:text-gray-400 text-sm"
+          />
+          <input
+            name="details"
+            value={task.details}
+            onChange={handleChange}
+            placeholder="Task Details"
+            className="w-full p-2 bg-zinc-700 text-white rounded placeholder:text-gray-400 text-sm"
+          />
+          <input
+            name="time"
+            type="number"
+            value={task.time}
+            onChange={handleChange}
+            placeholder="Time (minutes)"
+            className="w-full p-2 bg-zinc-700 text-white rounded placeholder:text-gray-400 text-sm"
+          />
+          <button
+            onClick={addTask}
+            className="w-full bg-blue-600 hover:bg-blue-700 transition px-3 py-2 rounded text-sm"
+          >
+            ➕ Add Task
+          </button>
+        </div>
 
-      <ul className="space-y-4">
-        {tasks.map((task) => (
-          <li key={task._id} className="border p-3 rounded flex flex-col">
-            <div className="flex justify-between">
-              <div>
-                <h3 className="font-semibold">{task.title}</h3>
-                <p className="text-sm">{task.description}</p>
+        <div className="grid gap-4 md:grid-cols-2">
+          {tasks.map((t, i) => (
+            <div key={i} className="bg-zinc-800 rounded p-4 shadow flex justify-between items-start">
+              <div className="flex-1 pr-2">
+                <h2 className="font-semibold text-lg">{t.title}</h2>
+                <p className="text-sm text-gray-300">{t.details}</p>
+                <p className="mt-1 text-sm text-green-400">⏳ {formatTime(t.timeLeft)}</p>
               </div>
-              <button
-                onClick={() => deleteTask(task._id)}
-                className="text-red-500"
-              >
-                Delete
-              </button>
-            </div>
-            <div className="mt-2 flex items-center space-x-2">
-              {timers[task._id] ? (
-                <span className="text-green-600 font-mono">
-                  {Math.floor(timers[task._id] / 60)
-                    .toString()
-                    .padStart(2, "0")}
-                  :
-                  {(timers[task._id] % 60).toString().padStart(2, "0")}
-                </span>
-              ) : (
+              <div className="flex flex-col items-end space-y-1">
                 <button
-                  onClick={() =>
-                    startTimer(task._id, task.durationMinutes)
-                  }
-                  className="bg-gray-200 px-2 py-1 rounded"
+                  onClick={() => startTimer(i)}
+                  className="bg-green-600 hover:bg-green-700 text-sm px-3 py-1 rounded"
                 >
-                  Start Timer
+                  Start
                 </button>
-              )}
+                <button
+                  onClick={() => deleteTask(i)}
+                  className="bg-red-600 hover:bg-red-700 text-sm px-3 py-1 rounded"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default TimedTask;
+export default App;

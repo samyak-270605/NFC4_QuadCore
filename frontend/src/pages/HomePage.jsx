@@ -105,70 +105,76 @@ const HomePage = () => {
                 const hasRequestBeenSent = outgoingRequestsIds.has(user._id);
 
                 return (
-                  <div
-                    key={user._id}
-                    className="card bg-base-200 hover:shadow-lg transition-all duration-300"
-                  >
-                    <div className="card-body p-5 space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="avatar size-16 rounded-full">
-                          <img src={user?.profilePic} alt={user?.fullName} />
-                        </div>
+  <div
+    key={user._id}
+    className="card w-full max-w-md bg-base-100 border border-base-300 shadow-md hover:shadow-lg transition-all duration-300"
+  >
+    <div className="card-body p-5 space-y-4">
+      
+      {/* Avatar + Name + Location */}
+      <div className="flex items-center gap-4">
+        <div className="avatar">
+          <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <img src={user?.profilePic} alt={user?.fullName} />
+          </div>
+        </div>
 
-                        <div>
-                          <h3 className="font-semibold text-lg">{user.fullName}</h3>
-                          {user.location && (
-                            <div className="flex items-center text-xs opacity-70 mt-1">
-                              <MapPinIcon className="size-3 mr-1" />
-                              {user.location}
-                            </div>
-                          )}
-                        </div>
-                      </div>
+        <div>
+          <h3 className="font-semibold text-lg truncate">{user.fullName}</h3>
+          {user.location && (
+            <div className="flex items-center text-xs text-base-content/70 mt-1">
+              <MapPinIcon className="w-3 h-3 mr-1" />
+              {user.location}
+            </div>
+          )}
+        </div>
+      </div>
 
-                      {/* Languages with flags */}
-                      <div className="flex flex-wrap gap-1.5">
-                        <span className="badge badge-secondary">
-                          {getLanguageFlag(user.nativeLanguage)}
-                          Native: {capitialize(user.nativeLanguage)}
-                        </span>
-                        <span className="badge badge-outline">
-                          {getLanguageFlag(user.learningLanguage)}
-                          Learning: {capitialize(user.learningLanguage)}
-                        </span>
-                      </div>
+      {/* Languages */}
+      <div className="flex flex-wrap gap-2">
+        <span className="badge badge-secondary gap-1 text-sm px-3 py-1">
+          {getLanguageFlag(user.nativeLanguage)}
+          Native: {capitialize(user.nativeLanguage)}
+        </span>
+        <span className="badge badge-outline gap-1 text-sm px-3 py-1">
+          {getLanguageFlag(user.learningLanguage)}
+          Learning: {capitialize(user.learningLanguage)}
+        </span>
+      </div>
 
-                      {user.bio && <p className="text-sm opacity-70">{user.bio}</p>}
+      {/* Bio */}
+      {user.bio && <p className="text-sm text-base-content/70">{user.bio}</p>}
 
-                      {/* Action button */}
-                      <button
-                        className={`btn w-full mt-2 ${
-                          hasRequestBeenSent ? "btn-disabled" : "btn-primary"
-                        } `}
-                        onClick={() => sendRequestMutation(user._id)}
-                        disabled={hasRequestBeenSent || isPending}
-                      >
-                        {hasRequestBeenSent ? (
-                          <>
-                            <CheckCircleIcon className="size-4 mr-2" />
-                            Request Sent
-                          </>
-                        ) : (
-                          <>
-                            <UserPlusIcon className="size-4 mr-2" />
-                            Send Friend Request
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                );
+      {/* Action Button */}
+      <button
+        className={`btn w-full mt-2 ${
+          hasRequestBeenSent ? "btn-disabled" : "btn-primary"
+        }`}
+        onClick={() => sendRequestMutation(user._id)}
+        disabled={hasRequestBeenSent || isPending}
+      >
+        {hasRequestBeenSent ? (
+          <>
+            <CheckCircleIcon className="w-4 h-4 mr-2" />
+            Request Sent
+          </>
+        ) : (
+          <>
+            <UserPlusIcon className="w-4 h-4 mr-2" />
+            Send Friend Request
+          </>
+        )}
+      </button>
+    </div>
+  </div>
+);
               })}
             </div>
           )}
         </section>
       </div>
     </div>
+    
   );
 };
 

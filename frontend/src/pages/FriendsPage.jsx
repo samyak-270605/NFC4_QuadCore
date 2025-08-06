@@ -35,7 +35,7 @@ const FriendsPage = () => {
                         <img src={friend.profilePic} alt={friend.fullName} />
                       </div>
                       <div>
-                        <h3 className="font-semibold">{friend.fullName}</h3>
+                        <h3 className="font-sm">{friend.fullName}</h3>
                         <div className="flex flex-wrap gap-1.5 mt-1">
                           <span className="badge badge-secondary badge-sm">
                             Native: {friend.nativeLanguage}

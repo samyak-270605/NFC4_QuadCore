@@ -3,32 +3,40 @@ import { getLanguageFlag } from "./getLanguageFlag";
 
 const FriendCard = ({ friend }) => {
   return (
-    <div className="card bg-base-200 hover:shadow-md transition-shadow">
-      <div className="card-body p-4">
-        {/* USER INFO */}
-        <div className="flex items-center gap-3 mb-3">
-          <div className="avatar size-12">
-            <img src={friend.profilePic} alt={friend.fullName} />
+    <div className="card w-full max-w-md bg-base-100 border border-base-300 shadow-md hover:shadow-lg transition duration-300">
+      <div className="card-body p-5 space-y-4">
+
+        {/* Avatar + Name */}
+        <div className="flex items-center gap-4">
+          <div className="avatar">
+            <div className="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src={friend.profilePic} alt={friend.fullName} />
+            </div>
           </div>
-          <h3 className="font-semibold truncate">{friend.fullName}</h3>
+          <div>
+            <h2 className="text-lg font-bold truncate">{friend.fullName}</h2>
+          </div>
         </div>
 
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          <span className="badge badge-secondary text-xs">
+        {/* Language Badges */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
+          <div className="badge badge-secondary badge-lg gap-2 px-3 py-1 text-sm">
             {getLanguageFlag(friend.nativeLanguage)}
             Native: {friend.nativeLanguage}
-          </span>
-          <span className="badge badge-outline text-xs">
+          </div>
+          <div className="badge badge-outline badge-lg gap-2 px-3 py-1 text-sm">
             {getLanguageFlag(friend.learningLanguage)}
             Learning: {friend.learningLanguage}
-          </span>
+          </div>
         </div>
 
-        <Link to={`/chat/${friend._id}`} className="btn btn-outline w-full">
-          Message
+        {/* Action Button */}
+        <Link to={`/chat/${friend._id}`} className="btn btn-outline btn-primary w-full">
+          💬 Message
         </Link>
       </div>
     </div>
   );
 };
+
 export default FriendCard;
