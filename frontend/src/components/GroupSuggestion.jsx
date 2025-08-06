@@ -1,6 +1,6 @@
 import React from "react";
 
-const GroupSuggestionCard = ({ group, onJoin }) => {
+const GroupSuggestionCard = ({ group }) => {
   return (
     <div className="card w-full max-w-md bg-base-100 border border-base-300 shadow-md hover:shadow-lg transition duration-300">
       <div className="card-body p-5 space-y-4">
@@ -14,12 +14,6 @@ const GroupSuggestionCard = ({ group, onJoin }) => {
               Field: {group.field}
             </p>
           </div>
-          <button
-            onClick={() => onJoin(group._id)}
-            className="btn btn-primary btn-sm"
-          >
-            Join
-          </button>
         </div>
 
         {/* Description */}
@@ -66,3 +60,12 @@ const GroupSuggestionCard = ({ group, onJoin }) => {
 };
 
 export default GroupSuggestionCard;
+
+
+
+//<button
+//            onClick={() => onJoin(group._id)}
+//            className="btn btn-primary btn-sm"
+//          >
+//            Join
+//          </button>
